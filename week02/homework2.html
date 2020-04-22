@@ -1,0 +1,66 @@
+<script type="text/javascript">
+	/**
+	 * 解题过程：
+	 * 刚开始理解的是将unicode转化为utf-8
+	 * 然后在网上查定义：utf-8是unicode的一种实现形式，当然，在这个过程中也补了好多知识，比如
+	 * ASCII  Unicode UTF-8 UTF-16 
+	 * 然后unicode转utf-8的方法对照着网上的资料算是理解了 大体过程就是根据Unicode表中码点起值和终值
+	 * 去判断输入字符串的unicode的编码区间（字节序列），再根据转换关系表从右到左替换二进制编码中的X，最终得到utf-8的二进制编码
+	 * 然后又去网上找了下转换方法，最终得到以下答案，看不懂。。。
+	 * */
+    function UTF8_Encoding(string) {
+        var result = [], i = 0;
+        text = encodeURI(text);
+        while (i < text.length) {
+            var c = text.charCodeAt(i++);
+            if (c === 37) {
+                result.push(parseInt(text.substr(i, 2), 16))
+                i += 2;
+            } else {
+                result.push(c)
+            }
+        }
+        return coerceArray(result);
+    }
+    function checkInt(value) {
+        return (parseInt(value) === value);
+    }
+
+    function checkInts(arrayish) {
+        if (!checkInt(arrayish.length)) { return false; }
+
+        for (var i = 0; i < arrayish.length; i++) {
+            if (!checkInt(arrayish[i]) || arrayish[i] < 0 || arrayish[i] > 255) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    function coerceArray(arg, copy) {
+        // ArrayBuffer view
+        if (arg.buffer && arg.name === 'Uint8Array') {
+            if (copy) {
+                if (arg.slice) {
+                    arg = arg.slice();
+                } else {
+                    arg = Array.prototype.slice.call(arg);
+                }
+            }
+
+            return arg;
+        }
+        if (Array.isArray(arg)) {
+            if (!checkInts(arg)) {
+                throw new Error('Array contains invalid value: ' + arg);
+            }
+            return new Uint8Array(arg);
+        }
+        if (checkInt(arg.length) && checkInts(arg)) {
+            return new Uint8Array(arg);
+        }
+        throw new Error('unsupported array-like object');
+    }
+	
+</script>
