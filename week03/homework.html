@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<script type="text/javascript">
+		/**
+		 * 补充知识：charCodeAt()只能返回两字节存储一个字符的码点值
+		 * （length表示字符长度）codePointAt()返回四个字节存储的字符码点值
+		 * number要求：参考词法
+		 * 1.跟parseFloat一致
+		 * 2.跟Number一致
+		 * 3.跟1231(直接量)一致
+		 * // 0X1011  
+		 * // 0b1011
+		 * // 0o1011
+		 * // 10.3e10//自己写
+		 * 精度问题我不考虑了。。。
+		 * */
+		function convertStringToNumber(string, x){
+			if(arguments.length < 2){
+				x = 10;//默认十进制
+			}
+			console.log(string);
+			let number = 0;
+			let chars
+			if(x === 10){
+				// 科学计数法
+				let scienceNumber = '';
+				if(string.toLowerCase().indexOf('e') > 0){
+					let scienceChars = string.split('e');
+					//小数点位置
+					let pointIndex = string.toLowerCase().indexOf('.');
+					// 去掉小数点的数组
+					let baseNum = scienceChars[0].split('');
+					baseNum.splice(pointIndex,1);
+					// 判断指数正负
+					if(scienceChars[1].length < 2){//正
+						// 补几个0
+						let addEndZeroNum = scienceChars[1] - scienceChars[0].split('.')[1].length;
+						for(let i = 0; i < addEndZeroNum; i++){
+							baseNum.push('0');
+						}
+						scienceNumber = baseNum.join('')
+						console.log('scienceNumber', scienceNumber)
+					}else{//负
+						let addStartZeroNum = scienceChars[1].split('')[1] - scienceChars[0].split('.')[0].length;
+						for(let i = 0; i < addStartZeroNum; i++){
+							baseNum.unshift('0');
+						}
+						scienceNumber = '0.' + baseNum.join('')
+					}
+				}
+				var i = 0;
+				if(scienceNumber.length > 0){
+					chars = scienceNumber.split('');
+				}else{
+					chars = string.split('');
+				}
+				while(i < chars.length && chars[i] != '.'){
+					// number = number * 10; 转进制
+					number = number * x;
+					number += chars[i].codePointAt(0) - '0'.codePointAt(0);//将字符转数字
+					i++
+				}
+				if(chars[i] === '.'){
+					i++;
+				}
+				// console.log(chars[i]);
+				var fraction = 1;
+				while(i < chars.length){
+					// number = number * 10; 转进制
+					fraction = fraction / x;
+					number += (chars[i].codePointAt(0) - '0'.codePointAt(0)) * fraction;//将字符转数字
+					i++;
+				}
+				fraction = fraction / x;
+				return number;
+			}
+			if(x === 2 || x === 8){
+				let i = 0;
+				const newChars = [];
+				while(i < chars.length){
+					if((x === 2 && (chars[i].codePointAt(0) - '0'.codePointAt(0) > 1)) || (x === 8 && (chars[i].codePointAt(0) - '0'.codePointAt(0) > 7))){
+						break;
+					}
+					newChars.push(chars[i]);
+					i++;
+				}
+				let j = 0;
+				while(j < newChars.length){
+					number += (newChars[j].codePointAt(0) - '0'.codePointAt(0)) * Math.pow(x, (newChars.length - 1 - j));
+					j++;
+				}
+				return number;
+			}
+		}
+		// console.log(convertStringToNumber('10.0231'));
+		console.log(convertStringToNumber('2.37e-2', 10));
+		/**
+		 * 小数部分、整数部分
+		 * **/ 
+		function convertNumberToString(number, x){
+			// 怎么处理小数
+			var integer = Math.floor(number);
+			var fraction = number - integer;
+			var string = '';
+			while(integer > 0){
+				string = String(integer % x) + string;//得到最后一位 109%10 = 9
+				integer = Math.floor(integer / x)
+			}
+			return string;
+		}
+		
+		// console.log(convertNumberToString(100, 10));
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
