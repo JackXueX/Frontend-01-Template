@@ -1,14 +1,12 @@
-# class1
-### 结构化程序设计
-
-* 宏任务
-* 微任务
-* 函数调用
-* 语句/声明
-* 直接量/变量/this...
-
-####固有对象
-
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<script type="text/javascript">
+	// 统计固有对象的路径
 	var set = new Set();
 	var globalProperties = [
 		"eval",
@@ -66,7 +64,6 @@
 			object: this[p]
 		})
 	}
-	
 	let current;
 	
 	while(queue.length){
@@ -76,9 +73,15 @@
 			continue;
 		set.add(current.object);
 		
+		let proto = Object.getPrototypeOf(current.object);
+		if(proto){
+			queue.push({
+				path: current.path.concat(["__proto__"]),
+				object: proto
+			})
+		}
 		for(let p of Object.getOwnPropertyNames(current.object)){
 			let property = Object.getOwnPropertyDescriptor(current.object, p)
-			
 			if(property.hasOwnProperty("value") && 
 			(property.value != null && (typeof property.value == 'object') || (typeof property.value == 'object')) 
 			&& property.value instanceof Object)
@@ -102,89 +105,30 @@
 	}
 	
 	console.log(set);
-
-
-#### 函数调用
-
-```
-import {foo} from "foo.js"
-var i = 0;
-console.log(i);
-foo();
-console.log(i);
-i++;
-```
-
-```
-function foo(){
-	var x = 1;
-	console.log(x);
-}
-export foo;
-```
-* 思考：执行顺序？
-
-```
-var i = 0;
-console.log(i);
-
-	// 执行这两句的时候能不能访问到 i ? 
-	// 能
-	var x = 1;
-	console.log(i);
-
-console.log(i);
-i++;
-```
-* 存在进入点  退出点  函数调用和函数返回
-* 形成了执行上下文栈
-
-
-
-
-# class2浏览器工作原理
-### 浏览器
-
-* URL  
-	* HTTP
-* HTML  
-	* parse
-* DOM  
-	* css computing
-* DOM with CSS  
-	* layout
-* DOM with position
-	* render
-* Bitmap
-
-### ISO-OSI七层网络模型
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	/**
+	 * 补充一点js得知识
+	 * 
+	 * es有两种属性：数据属性 访问器属性
+	 * 
+	 * 数据属性：包含一个数据值得位置，在这个位置可以读取值和写入值，数据属性有4个描述其
+	 * 行为得属性
+	 * 
+	 * 1.[[Configurable]]:可配置 如果设置为false之后，后面得属性将无法配置   delete  默认true
+	 * 2.[[Enumerable]]：可枚举 for in 返回属性  默认true
+	 * 3.[[Writable]]：可修改  默认true
+	 * 4.[[Value]]：数据值     默认undefined
+	 * 
+	 * 访问器属性
+	 * 1.[[Configurable]]:可配置
+	 * 2.[[Enumerable]]：可枚举
+	 * 3.[[Get]]：读取属性时调用的函数
+	 * 4.[[Set]]：写入属性时调用的函数
+	 * 
+	 * */
+	</script>
+</head>
+<body>
+	
+</body>
+</html>
