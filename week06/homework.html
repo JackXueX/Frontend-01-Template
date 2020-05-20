@@ -1,0 +1,44 @@
+<script type="text/javascript">
+	// abababx
+	function match(string) {
+		let state = start;
+		for(let char of string){
+			console.log(char);
+			state = state(char);
+		}
+		return state === end;
+	}
+
+	function start(char) {
+		console.log('start', char)
+		if (char === 'a') {
+			console.log('进来了')
+			return foundA;
+		} else {
+			return start;
+		}
+	}
+
+	function end(char) {
+		return end;
+	}
+
+	function foundA(char) {
+		if (char === 'b') {
+			return foundB;
+		} else {
+			return start;
+		}
+	}
+
+	function foundB(char) {
+		if (char === 'x') {
+			return end;
+		} else if (char === 'a') {
+			return foundA;
+		} else {
+			return start;
+		}
+	}
+	console.log(match('abababx'));
+</script>
