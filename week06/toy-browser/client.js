@@ -50,7 +50,7 @@ ${this.bodyText}`
           resolve(parser.response);
         }
         // console.log(parser.statusLine);
-        console.log(parser.headers);
+        // console.log(parser.headers);
         // resolve(data.toString());
         connection.end();
       });
@@ -109,7 +109,7 @@ class ResponseParser {
   }
 
   receiveChar(char){
-    if(this.current === this.WATTING_STATUS_LINE){
+    if (this.current === this.WATTING_STATUS_LINE) {
       // console.log(char.charCodeAt(0));
       if (char === "\r") {
         // console.log("\\r");
@@ -195,7 +195,7 @@ class TrunkedBodyParser {
         this.length += parseInt(char, 16);
       }
     }else if(this.current === this.WATTING_LENGTH_LINE_END){
-      if (char === "\n") {
+      if (char === "\n") {  
         this.current = this.READING_TRUNK;
       }
     }else if(this.current === this.READING_TRUNK){
@@ -216,7 +216,6 @@ class TrunkedBodyParser {
   }
 }
 
-
 // 调用api
 void async function() {
   let request = new  Request({
@@ -230,10 +229,11 @@ void async function() {
       name: 'winter'
     }
   })
-  
+
   let response = await request.send();
-  console.log(response);
+
   let dom = parser.parseHTML(response.body);
+  console.log(JSON.stringify(dom, null, 4));
 }();
 
 

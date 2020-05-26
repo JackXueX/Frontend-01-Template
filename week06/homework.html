@@ -1,44 +1,83 @@
-<script type="text/javascript">
-	// abababx
-	function match(string) {
-		let state = start;
-		for(let char of string){
-			console.log(char);
-			state = state(char);
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	<script type="text/javascript">
+		// 'abcabcabx'
+		function match(string) {
+			// 将函数赋值给一个变量
+			let state = start;
+			for(let c of string){
+				state = state(c);
+			}
+			return state === end;
 		}
-		return state === end;
-	}
-
-	function start(char) {
-		console.log('start', char)
-		if (char === 'a') {
-			console.log('进来了')
-			return foundA;
-		} else {
-			return start;
+		
+		function start(c) {
+			if (c === 'a') {
+				return foundA;
+			} else {
+				return start;
+			}
 		}
-	}
-
-	function end(char) {
-		return end;
-	}
-
-	function foundA(char) {
-		if (char === 'b') {
-			return foundB;
-		} else {
-			return start;
-		}
-	}
-
-	function foundB(char) {
-		if (char === 'x') {
+		
+		function end(c) {
 			return end;
-		} else if (char === 'a') {
-			return foundA;
-		} else {
-			return start;
 		}
-	}
-	console.log(match('abababx'));
-</script>
+		
+		function foundA(c) {
+			if (c === 'b') {
+				return foundB;
+			} else {
+				return start(c);
+			}
+		}
+		
+		function foundB(c) {
+			if (c === 'c') {
+				return foundA2;
+			} else {
+				return start(c);
+			}
+		}
+		
+		function foundA2(c) {
+			if (c === 'a') {
+				return foundB2;
+			} else {
+				return start(c);
+			}
+		}
+		
+		function foundB2(c) {
+			if (c === 'b') {
+				return foundX;
+			} else {
+				return start(c);
+			}
+		}
+		
+		function foundX(c) {
+			if (c === 'x') {
+				return end;
+			} else if (c === 'c') {
+				return foundA2;
+			} else {
+				return start(c);
+			}
+		}
+		
+		console.log(match('abcabababcabx'));
+		
+		// 'abc abcabx'
+	</script>
+</body>
+</html>
