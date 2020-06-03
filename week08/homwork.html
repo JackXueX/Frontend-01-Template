@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			div #id.class {
+				color: red;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="parent">
+			<div>
+				<div id="id" class="class">niahao</div>
+			</div>
+			<div id="brother">
+				
+			</div>
+		</div>
+		<script type="text/javascript">
+			const id = document.getElementById('parent');
+			console.log(id)
+			console.log(id.attributes)
+			
+			
+			function match(selector,element) {
+				for (let item of selector) {
+					console.log('item', item)
+					if () {}
+				}
+			}
+			
+			match("div #id.class");
+		</script>
+	</body>
+</html>
