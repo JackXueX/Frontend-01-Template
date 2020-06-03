@@ -20,18 +20,33 @@
 		</div>
 		<script type="text/javascript">
 			const id = document.getElementById('parent');
-			console.log(id)
-			console.log(id.attributes)
 			
 			
 			function match(selector,element) {
-				for (let item of selector) {
-					console.log('item', item)
-					if () {}
+				if(selector[0] != '#' && selector[0] != '.' && selector[0] != '*') {
+					const selectorSymbol = [];
+					if (selector.includes('#')) {
+						selectorSymbol.push(selector.indexOf('#'))
+					} else if () {
+						
+					}
 				}
 			}
 			
-			match("div #id.class");
+			// 逐步循环
+			function elementMacthRule(elementNode) {
+				console.log(elementNode)
+				console.log(elementNode.attributes)
+				// if (elementNode.attributes[0].name === 'id' && selector[0] === '#') {
+					 
+				// }
+				
+			}
+			
+			// match("div #id.class");
+			
+			elementMacthRule(id);
+			
 		</script>
 	</body>
 </html>
