@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="a">
+    <span>1</span>
+    <p>2</p>
+    <a>3</a>
+    <div>4</div>
+  </div>
+  <script>
+    // 逆序元素
+
+    // 解析1
+    /*
+    let element = document.getElementById("a");
+
+    function reverseChildren(element) {
+      let children = Array.prototype.slice.call(element.childNodes);
+
+      for (let child of children) {
+        element.removeChild(child);
+      }
+
+      children.reverse();
+
+      for (let child of children) {
+        element.appendChild(child);
+      }
+    }
+
+    reverseChildren(element);
+    */
+
+    // 解析2 理解怎么操作dom
+    /*
+    let element = document.getElementById("a");
+    function reverseChildren(element) {
+      var l = element.childNodes.length;
+      console.log(element.childNodes);
+      while(l-- > 0) {
+        element.appendChild(element.childNodes[l]);
+      }
+    }
+
+    reverseChildren(element);
+    */
+
+    // 解析3 range
+    let element = document.getElementById("a");
+    function reverseChildren(element) {
+      let range = new Range();
+      range.selectNodeContents(element); // 选中element所有子元素
+
+      let fragment = range.extractContents(); // 摘下来所有子元素
+      var l = fragment.childNodes.length; // 不会重排重绘
+      while(l-- > 0) {
+        fragment.appendChild(fragment.childNodes[l]);
+      }
+      element.appendChild(fragment);
+    }
+
+    reverseChildren(element);
+  </script>
+</body>
+</html>
