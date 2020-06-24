@@ -62,13 +62,13 @@
 			color = 3 - color;
 			show();
 
-			computerMove()
+			computerMove(pattern, color)
 			// if (willWin(pattern, color)) {
 			// 	console.log(color == 2 ? "❌ will win!" : "⭕️ will win!");
 			// }
 		}
 
-		function computerMove() {
+		function computerMove(pattern, color) {
 			let choice = bestChoice(pattern, color);
 			if (choice.point) {
 				pattern[choice.point[1]][choice.point[0]] = color;
@@ -142,7 +142,7 @@
 			for (let i = 0; i < 3; i++) {
 				for (let j = 0; j < 3; j++) {
 					if (pattern[i][j] !== 0) {
-						continue;
+						continue; // 跳过当此循环继续下次循环
 					}
 					// 为什么要clone
 					// 拿到最新的实际落子结果，模拟下一次落子，去检查结果
