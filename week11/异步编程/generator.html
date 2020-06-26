@@ -74,7 +74,6 @@
         yield sleep(500);
       }
     }
-
     /*
     function co(iterator) {
       let {value, done} = iterator.next();
@@ -128,17 +127,17 @@
 
     // ******
 
-    async function* g() {
-      let i = 0;
-      while(true) {
-        await sleep(1000);
-        yield i++;
-      }
-    }
+    // async function* g() {
+    //   let i = 0;
+    //   while(true) {
+    //     await sleep(1000);
+    //     yield i++;
+    //   }
+    // }
 
-    for await(let v of g()) {
-      console.log(v);
-    }
+    // for await(let v of g()) {
+    //   console.log(v);
+    // }
 	</script>
 </body>
 </html>
