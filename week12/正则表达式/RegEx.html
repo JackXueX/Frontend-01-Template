@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则表达式</title>
+</head>
+<body>
+  <script>
+	// 去掉多余的空白字符
+	let reg = /(?<![a-zA-Z])\s+(?![a-zA-Z])/g;
+	let str = '中   英  文   混排，some english word，有   多   余的空 白 字符';
+	console.log(str.replace(reg, ''))
+	// 用替换可以吃掉多余字符串
+  </script> 
+</body>
+</html>

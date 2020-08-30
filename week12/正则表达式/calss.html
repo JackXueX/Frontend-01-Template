@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>class</title>
+</head>
+<body>
+  <script>
+    const DOM = new Proxy({}, {
+      get(target, property) {
+        return function(attr={}, ...children) {
+          // console.log(attr, children);
+          const el = document.createElement(property);
+          for (let key of Object.keys(attr)) {
+            el.setAttribute(key, attr[key]);
+          }
+          
+          for (let child of children) {
+            if (typeof child == 'string') {
+              child = document.createTextNode(child);
+            }
+            el.appendChild(child);
+          }
+          return el;
+        }
+      }
+    });
+    // 被代理对象
+    let oDiv = DOM.div(
+      {id: 'div1'}, '我是div', '呵呵呵呵',
+      DOM.a({href:'http://www.baidu.com'}, '访问官网',
+        
+      ),
+      DOM.ul({id: 'ha'}, '我是ul')
+    );
+    console.log(oDiv)
+    window.onload = function() {
+      document.body.appendChild(oDiv);
+    }
+  </script>
+</body>
+</html>
