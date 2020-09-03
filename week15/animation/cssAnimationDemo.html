@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style>
+	  #el{
+	      width: 100px;
+	      height: 100px;
+	      background-color: pink;
+	
+	  }
+	</style>
+</head>
+<body>
+	<div id="el"></div>
+	<button onclick="start()">start</button>
+	<button onclick="stop()">stop</button>
+	<script>
+		let el= document.getElementById('el')
+		el.style.transition ="ease 5s"
+		
+		function start(){
+		  el.style.transform = "translate(300px, 300px)"
+		}
+		function stop(){
+		  el.style.transform = getComputedStyle(el).transform
+		  el.style.transition = "none"
+		}
+	
+	</script>
+</body>
+</html>
